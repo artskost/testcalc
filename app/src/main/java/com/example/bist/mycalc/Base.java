@@ -13,13 +13,22 @@ import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
+import java.util.EnumMap;
+import java.util.Objects;
+
 
 public class Base extends ActionBarActivity {
 
+    private EditText textForResult;
 
+    private Button btnAdd;
+    private Button btnDivide;
+    private Button btnMultiply;
+    private Button btnSubstract;
 
-    EditText textForResult;
+    private OperationType operationType;
 
+    private EnumMap<Symbol, Object> actionCommands = new EnumMap<Symbol, Object>(Symbol.class);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +38,16 @@ public class Base extends ActionBarActivity {
 
 
     textForResult = (EditText) findViewById(R.id.textForResult);
+
+    btnAdd = (Button) findViewById(R.id.btnAdd);
+    btnDivide = (Button) findViewById(R.id.btnDivide);
+    btnMultiply = (Button) findViewById(R.id.btnMulti);
+    btnSubstract = (Button) findViewById(R.id.btnSubstract);
+
+    btnAdd.setTag(OperationType.ADD);
+    btnDivide.setTag(OperationType.DIVIDE);
+    btnMultiply.setTag(OperationType.MULTIPLY);
+    btnSubstract.setTag(OperationType.SUBSTRACT);
 
     }
 
@@ -61,7 +80,11 @@ public class Base extends ActionBarActivity {
         switch (v.getId()){
             case R.id.btnAdd :
             case R.id.btnDivide :
-            case R.id.btnSubstract  : {
+            case R.id.btnSubstract  :
+            case R.id.btneQually :
+            case R.id.btnClear :
+            case R.id.btnDot :
+            case R.id.btnMulti : {
                 break;
             }
 
