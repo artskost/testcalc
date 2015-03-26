@@ -8,82 +8,27 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
 
-public class Base extends ActionBarActivity  implements View.OnClickListener{
-    Button buttonSeven;
-    Button buttonEight;
-    Button buttonNine;
-    Button buttonPlus;
+public class Base extends ActionBarActivity {
 
-    Button buttonFour;
-    Button buttonFive;
-    Button buttonSix;
-    Button buttonMinus;
 
-    Button buttonOne;
-    Button buttonTwo;
-    Button buttonThree;
-    Button buttonMulti;
 
-    Button buttonZero;
-    Button buttonClear;
-    Button buttonEqually;
-    Button buttonDivision;
+    EditText textForResult;
 
-    TextView textViewForResult;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
-        buttonSeven = (Button) findViewById(R.id.buttonSeven);
-        buttonEight = (Button) findViewById(R.id.buttonEight);
-        buttonNine = (Button) findViewById(R.id.buttonNine);
-        buttonPlus = (Button) findViewById(R.id.buttonPlus);
-
-        buttonFour = (Button) findViewById(R.id.buttonFour);
-        buttonFive = (Button) findViewById(R.id.buttonFive);
-        buttonSix = (Button) findViewById(R.id.buttonSix);
-        buttonMinus = (Button) findViewById(R.id.buttonMinus);
-
-        buttonOne = (Button) findViewById(R.id.buttonOne);
-        buttonTwo = (Button) findViewById(R.id.buttonTwo);
-        buttonThree = (Button) findViewById(R.id.buttonThree);
-        buttonMulti = (Button) findViewById(R.id.buttonMulti);
-
-        buttonZero = (Button) findViewById(R.id.buttonZero);
-        buttonClear = (Button) findViewById(R.id.buttonClear);
-        buttonEqually = (Button) findViewById(R.id.buttonEqually);
-        buttonDivision = (Button) findViewById(R.id.buttonDivision);
-
-        textViewForResult = (TextView) findViewById(R.id.textViewForResult);
-
-        buttonSeven.setOnClickListener(this);
-        buttonEight.setOnClickListener(this);
-        buttonNine.setOnClickListener(this);
-        buttonPlus.setOnClickListener(this);
-
-        buttonFour.setOnClickListener(this);
-        buttonFive.setOnClickListener(this);
-        buttonSix.setOnClickListener(this);
-        buttonMinus.setOnClickListener(this);
-
-        buttonOne.setOnClickListener(this);
-        buttonTwo.setOnClickListener(this);
-        buttonThree.setOnClickListener(this);
-        buttonMulti.setOnClickListener(this);
-
-        buttonZero.setOnClickListener(this);
-        buttonClear.setOnClickListener(this);
-        buttonEqually.setOnClickListener(this);
-        buttonDivision.setOnClickListener(this);
 
 
+    textForResult = (EditText) findViewById(R.id.textForResult);
 
     }
 
@@ -110,25 +55,23 @@ public class Base extends ActionBarActivity  implements View.OnClickListener{
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onClick(View v) {
 
-        double firstNumber;
-        double secondNumber;
-        double result;
+    public void buttonClick(View v) {
 
-        firstNumber = Double.parseDouble(textViewForResult.getText().toString());
-        secondNumber = Double.parseDouble(textViewForResult.getText().toString());
+        switch (v.getId()){
+            case R.id.btnAdd :
+            case R.id.btnDivide :
+            case R.id.btnSubstract  : {
+                break;
+            }
 
-        if (TextUtils.isEmpty(textViewForResult.getText().toString())){
-            return;
+
+            default : {
+                textForResult.setText(textForResult.getText() + v.getContentDescription().toString());
+            }
+
+
         }
-
-        switch(v.getId()) {
-            case R.id.buttonSeven :
-
-        }
-
 
 
     }
