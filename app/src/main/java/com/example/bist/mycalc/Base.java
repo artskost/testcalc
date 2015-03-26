@@ -41,7 +41,7 @@ public class Base extends ActionBarActivity {
 
     btnAdd = (Button) findViewById(R.id.btnAdd);
     btnDivide = (Button) findViewById(R.id.btnDivide);
-    btnMultiply = (Button) findViewById(R.id.btnMulti);
+    btnMultiply = (Button) findViewById(R.id.btnMultyply);
     btnSubstract = (Button) findViewById(R.id.btnSubstract);
 
     btnAdd.setTag(OperationType.ADD);
@@ -74,6 +74,7 @@ public class Base extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    private ActionType lastAction;
 
     public void buttonClick(View v) {
 
@@ -81,10 +82,9 @@ public class Base extends ActionBarActivity {
             case R.id.btnAdd :
             case R.id.btnDivide :
             case R.id.btnSubstract  :
-            case R.id.btneQually :
-            case R.id.btnClear :
-            case R.id.btnDot :
-            case R.id.btnMulti : {
+            case R.id.btnMultyply : {
+
+                operationType = (OperationType) v.getTag();
                 break;
             }
 
@@ -98,4 +98,23 @@ public class Base extends ActionBarActivity {
 
 
     }
+
+    private double getDouble (Object value) {
+        double result = 0;
+
+        try {
+            result = Double.valueOf(value.toString().replace(',', '.')).doubleValue();
+        } catch (Exception e) {
+            e.printStackTrace();
+            result = 0;
+        }
+
+        return result;
+    }
+
+
+    private void doAction () {
+
+    }
+
 }
