@@ -85,18 +85,75 @@ public class Base extends ActionBarActivity {
             case R.id.btnMultyply : {
 
                 operationType = (OperationType) v.getTag();
+
+                if (!actionCommands.containsKey(Symbol.OPERATION)) {
+
+                    if (!actionCommands.containsKey(Symbol.FIRST_NUMBER)) {
+                        actionCommands.put(Symbol.FIRST_NUMBER, textForResult.getText());
+                    }
+
+                    actionCommands.put(Symbol.OPERATION, operationType);
+                } else if (!actionCommands.containsKey(Symbol.SECOND_NUMBER)) {
+                    actionCommands.put(Symbol.SECOND_NUMBER, textForResult.getText());
+                    doAction();
+                    actionCommands.put(Symbol.OPERATION, operationType);
+                    actionCommands.remove(Symbol.SECOND_NUMBER);
+                }
+                break;
+            }
+            //удаление всего
+            case R.id.btnClear : {
+                textForResult.setText("0");
+                actionCommands.clear();
+                break;
+            }
+            //результат при нажатии равно
+            case R.id.btnQually : {
+                if (actionCommands.containsKey(Symbol.FIRST_NUMBER) && actionCommands.containsKey(Symbol.OPERATION)) {
+                    actionCommands.put(Symbol.SECOND_NUMBER, textForResult.getText());
+                    doAction();
+
+                    actionCommands.put(Symbol.OPERATION, operationType);
+                    actionCommands.remove(Symbol.SECOND_NUMBER);
+                }
+                break;
+            }
+            //точка
+            case R.id.btnDot : {
+                if (actionCommands.containsKey(Symbol.FIRST_NUMBER)
+                    && getDouble(textForResult.getText().toString()) == getDouble(actionCommands
+                        .get(Symbol.FIRST_NUMBER).toString())) {
+                    textForResult.setText("0" + v.getContentDescription().toString());
+                }
+
+                if (!textForResult.getText().toString().contains(",")) {
+                    textForResult.setText(textForResult.getText() + ",");
+                }
                 break;
             }
 
+            //удаление последнего символа
+            case R.id.btnDelete : {
+                textForResult.setText(textForResult.getText().delete(
+                        textForResult.getText().length() - 1,
+                        textForResult.getText().length()));
 
-            default : {
-                textForResult.setText(textForResult.getText() + v.getContentDescription().toString());
+                if (textForResult.getText().toString().trim().length() == 0) {
+                    textForResult.setText("0");
+                }
+                break;
             }
 
+            default : {
 
+                if (textForResult.getText().toString().equals("0") || (actionCommands.containsKey(Symbol.FIRST_NUMBER)
+                        && getDouble(textForResult.getText()) == getDouble(actionCommands.get(Symbol.FIRST_NUMBER)))) {
+                        textForResult.setText(v.getContentDescription().toString());
+                } else {
+                    textForResult.setText(textForResult.getText() + v.getContentDescription().toString());
+                }
+            }
         }
-
-
     }
 
     private double getDouble (Object value) {
@@ -114,7 +171,43 @@ public class Base extends ActionBarActivity {
 
 
     private void doAction () {
+        OperationType operationTypeDoAction = (OperationType) actionCommands.get(Symbol.OPERATION);
 
+
+        double result = doDoubleAction(operationTypeDoAction, getDouble(actionCommands.get(Symbol.FIRST_NUMBER)),
+               getDouble(actionCommands.get(Symbol.SECOND_NUMBER)));
+
+
+        if (result % 1 == 0) {
+            textForResult.setText(String.valueOf((int)result));
+        } else {
+            textForResult.setText(String.valueOf(result));
+        }
+
+        actionCommands.put(Symbol.FIRST_NUMBER, result);
+    }
+
+
+    private Double doDoubleAction (OperationType operationType, double a, double b) {
+
+        switch (operationType) {
+            case ADD : {
+                return CalcOperations.add(a, b);
+            }
+
+            case DIVIDE : {
+                return CalcOperations.divide(a, b);
+            }
+
+            case MULTIPLY : {
+                return CalcOperations.multiply(a, b);
+            }
+
+            case SUBSTRACT : {
+                return CalcOperations.substract(a, b);
+            }
+        }
+        return null;
     }
 
 }
